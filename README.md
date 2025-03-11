@@ -1,6 +1,5 @@
 # reMarkbly-Random
-
-Based on `https://github.com/Neurone/reMarkable`
+Based on [https://pages.github.com/Neurone/reMarkable](https://github.com/Neurone/reMarkable)
 
 Customizations for reMarkable and reMarkable 2 Paper Tablet.
 Scripts tested and working on version `3.11.x`
@@ -14,6 +13,8 @@ The suspend image is loaded only when the reMarkable goes to sleep and the timer
 If you change the contents of `/home/root/customization/images/suspended` the script will detect the change and reindex the images automatically.
 
 Create your own images! They need to be 1404 x 1872 pngs and I used 229 ppi resolution. They don't have to be grayscale to work. I found the reMarkable logos here: `https://brandfetch.com/remarkable.com`
+
+**NOTE:** This repo comes with some default images. I did my best to research them to ensure they were not copyrighted. If you find or are the creator, please send a PR to this repo and I will either credit you or delete the image as you desire.
 
 ### Manual installation
 
@@ -76,7 +77,7 @@ cp /home/root/temp-reMarkable-customizations/scripts/random-screens/random-scree
 cp /home/root/temp-reMarkable-customizations/scripts/random-screens/random-screens.timer /usr/lib/systemd/user/random-screens.timer
 ```
 
-- Save the original image, just in case:
+- Save the original image, _just in case_:
 
 ```bash
 yes n | cp -i /usr/share/remarkable/suspended.png /usr/share/remarkable/suspended.original.png
