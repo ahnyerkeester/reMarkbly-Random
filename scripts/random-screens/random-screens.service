@@ -4,7 +4,7 @@ After=home.mount
 
 [Service]
 Type=simple
-ExecStart=/usr/share/remarkable/scripts/set-random-screens.sh
+ExecStart=/usr/share/remarkable/scripts/set-random-sleep.sh
 
 [Install]
 WantedBy=multi-user.target
