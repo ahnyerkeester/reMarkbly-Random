@@ -8,7 +8,7 @@ Scripts tested and working on version `3.11.x`
 
 After installing this script, every image in the `/home/root/customization/images/suspended` folder is indexed, put in a random order, and every 5 minutes the next image in order is made the current suspend screen. The names of the files are not relevant.
 
-The suspend image is loaded only when the reMarkable goes to sleep and the timer seems to only run when the reMarkable is awake. Therefore, these images do not change either (a) while sleeping or (b) necessarily after every sleep/wake cycle. I tried to find a system "on sleep" or "on wake" hook to run the script on but wasn't able to so we're sticking with the "every five minutes" concept.
+The suspend image is loaded only when the reMarkable goes to sleep and the timer seems to only run when the reMarkable is awake. Therefore, these images do not change either (a) while sleeping or (b) necessarily after every sleep/wake cycle. I tried to find a system "on sleep" or "on wake" hook to run the script on but wasn't able to so we're sticking with the "every five minutes" concept. Still working on triggering it every sleep/wake cycle.
 
 If you change the contents of `/home/root/customization/images/suspended` the script will detect the change and reindex the images automatically.
 
