@@ -39,7 +39,7 @@ scp -r reMarkable-customizations root@XXX.XXX.XXX.XXX:/home/root/temp-reMarkable
 
 ```bash
 ❯ ssh root@XXX.XXX.XXX.XXX
-root@XXX.XXX.XXX.XXX's password:
+root@XXX.XXX.XXX.XXX′s password:
 ｒｅＭａｒｋａｂｌｅ
 ╺━┓┏━╸┏━┓┏━┓   ┏━┓╻ ╻┏━╸┏━┓┏━┓
 ┏━┛┣╸ ┣┳┛┃ ┃   ┗━┓┃ ┃┃╺┓┣━┫┣┳┛
