@@ -4,8 +4,8 @@ Based on [https://pages.github.com/Neurone/reMarkable](https://github.com/Neuron
 Customizations for reMarkable and reMarkable 2 Paper Tablet.
 Scripts tested and working on version `3.11.x`
 
-[!WARNING]
-This project is **NOT** affiliated with nor endorsed by reMarkable AS. If you modify your device official support might refuse to help you if something goes wrong. Use at your own risk.
+> [!WARNING]
+> This project is **NOT** affiliated with nor endorsed by reMarkable AS. If you modify your device official support might refuse to help you if something goes wrong. Use at your own risk.
 
 ## Automatically change your suspend screen every 5 minutes
 
