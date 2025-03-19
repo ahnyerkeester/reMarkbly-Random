@@ -2,22 +2,27 @@
 Based on [https://pages.github.com/Neurone/reMarkable](https://github.com/Neurone/reMarkable)
 
 Customizations for reMarkable and reMarkable 2 Paper Tablet.
-Scripts tested and working on version `3.17.x`
 
 > [!WARNING]
-> This project is **NOT** affiliated with nor endorsed by reMarkable AS. If you modify your device official support might refuse to help you if something goes wrong. Use at your own risk.
+> This project is **NOT** affiliated with nor endorsed by reMarkable AS. If you modify your device, official support might refuse to help you if something goes wrong. Use at your own risk.
+
+Scripts tested and working on version `3.17.x` and `3.18.x`. May work on previous versions but I don't have access so couldn't test.
+
+> [!NOTE]
+> The `3.18` update removes the script and timer and resets the sleep screen to default. The fix is straightfoward. Put `random-screens.service`, `random-screens.timer`, and `set-random-sleep.sh` back where they belong and enable the service and timer as listed below.
 
 ## Automatically change your suspend screen every 5 minutes
 
-After installing this script, every image in the `/home/root/customization/images/suspended` folder is indexed, put in a random order, and every 5 minutes the next image in order is made the current suspend screen. The names of the files are not relevant.
+After installing this script, the images in `/home/root/customization/images/suspended` are indexed, put in a random order, and every 5 minutes the next image in order is made the current suspend screen. The names of the files are not relevant.
 
 The suspend image is loaded only when the reMarkable goes to sleep and the timer seems to only run when the reMarkable is awake. Therefore, these images do not change either (a) while sleeping or (b) necessarily after every sleep/wake cycle. I tried to find a system "on sleep" or "on wake" hook to run the script on but wasn't able to so we're sticking with the "every five minutes" concept. Still working on triggering it every sleep/wake cycle.
 
 If you change the contents of `/home/root/customization/images/suspended` the script will detect the change and reindex the images automatically.
 
-Create your own images! They need to be 1404 x 1872 pngs and I used 229 ppi resolution. They don't have to be grayscale to work. I found the reMarkable logos here: `https://brandfetch.com/remarkable.com`
+Create your own images! They need to be 1404 x 1872 pngs and I used 229 ppi resolution. They don't have to be grayscale to work. I found the reMarkable logos here: [https://brandfetch.com/remarkable.com](https://brandfetch.com/remarkable.com)
 
-**NOTE:** This repo comes with some default images. I did my best to research them to ensure they were not copyrighted. If you find or are the creator, please send a PR to this repo and I will either credit you or delete the image as you desire.
+> [!NOTE]
+> This repo comes with some default images. I did my best to research them to ensure they were not copyrighted. If you find they are or are the creator, please send a PR to this repo and I will either credit you or delete the image as you desire.
 
 ### Manual installation
 
@@ -27,7 +32,10 @@ Create your own images! They need to be 1404 x 1872 pngs and I used 229 ppi reso
 git clone git@github.com:ahnyerkeester/reMarkably-Random.git reMarkable-customizations
 ```
 
-- Get the IP address and password for your reMarkable: Menu bars in the top left corner -> Settings -> About -> Copyrights and licenses. These are displayed at the bottom of that box. Be aware that the IP may change periodically when connecting over WiFi, don't assume it will always be the same.
+- Get the IP address and password for your reMarkable: Menu bars in the top left corner -> **Settings** -> **About** -> **Copyrights and licenses**. These are displayed at the bottom of that box.
+
+> [!IMPORTANT]  
+>Be aware that the IP address may change periodically when connecting over WiFi, don't assume it will always be the same.
 
 - Connect to your reMarkable via USB or wake it and ensure it connects to WiFi. Copy this repo into a temp folder (change the XXXs below to the reMarabkle's IP address):
 
@@ -86,12 +94,6 @@ cp /home/root/temp-reMarkable-customizations/scripts/random-screens/random-scree
 yes n | cp -i /usr/share/remarkable/suspended.png /usr/share/remarkable/suspended.original.png
 ```
 
-- Delete the temp folder:
-
-```bash
-rm -rf /home/root/temp-reMarkable-customizations
-```
-
 - Enable service and timer:
 
 ```bash
@@ -106,6 +108,15 @@ systemctl enable /usr/lib/systemd/user/random-screens.service
 ```
 
 - Put your reMarkable to sleep and you should see a customized screen.
+
+- **OPTIONAL** To free up space, you may delete the temp folder:
+
+> [!TIP]
+> As I learned with the `3.18` update, you may need these files again. You could leave the folder here or if you need to reinstall them, you can always copy them back again. 
+
+```bash
+rm -rf /home/root/temp-reMarkable-customizations
+```
 
 ### Automatic installation
 
