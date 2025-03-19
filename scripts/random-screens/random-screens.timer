@@ -1,6 +1,7 @@
 # Author: Giuseppe Bertone
+# Modded by Tim Etherington
 [Unit]
-Description=Timer to randomize reMarkable screens (poweroff, sleep, etc.) every 5 minutes
+Description=Timer to randomize reMarkable sleep screen every 5 minutes
 
 [Timer]
 OnBootSec=1min
