@@ -65,8 +65,8 @@ mkdir -p /home/root/customization/images/suspended
 - Copy the script into the correct folder and make it executable:
 
 ```bash
-cp /home/root/temp-reMarkable-customizations/scripts/random-screens/set-random-screens.sh /usr/share/remarkable/scripts/
-chmod +x /usr/share/remarkable/scripts/set-random-screens.sh
+cp /home/root/temp-reMarkable-customizations/scripts/random-screens/set-random-sleep.sh /usr/share/remarkable/scripts/
+chmod +x /usr/share/remarkable/scripts/set-random-sleep.sh
 ```
 
 - Copy some images into the folder:
