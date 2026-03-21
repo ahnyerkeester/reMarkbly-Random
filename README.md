@@ -6,10 +6,10 @@ Customizations for reMarkable and reMarkable 2 Paper Tablet.
 > [!WARNING]
 > This project is **NOT** affiliated with nor endorsed by reMarkable AS. If you modify your device, official support might refuse to help you if something goes wrong. Use at your own risk.
 
-Scripts tested and working on version `3.17.x` and `3.18.x`. May work on previous versions but I don't have access so couldn't test.
+Scripts tested and working on versions `3.17.x` up to `3.26.x`. May work on previous versions but I don't have access so couldn't test.
 
 > [!NOTE]
-> The `3.18` update removes the script and timer and resets the sleep screen to default. The fix is straightforward. Put `random-screens.service`, `random-screens.timer`, `set-random-sleep.sh`, `monitor-sleep-wake.service`, and `monitor-sleep-wake.sh` back where they belong and enable them as listed below.
+> Updates tend to remove the timer and reset the sleep screen to default. Good news is that it leaves your images alone. To fix this, just run `./putitback.sh`.
 
 ## Automatically change your suspend screen on every sleep/wake cycle (preferred)
 
@@ -24,19 +24,6 @@ If you change the contents of `/home/root/customization/images/suspended` the sc
 > ```bash
 > systemctl restart monitor-sleep-wake.service
 > ```
-
-## Automatically change your suspend screen every 5 minutes
-
-After installing this script, the images in `/home/root/customization/images/suspended` are indexed, put in a random order, and every 5 minutes the next image in order is made the current suspend screen. The names of the files are not relevant.
-
-The suspend image is loaded only when the reMarkable goes to sleep and the timer seems to only run when the reMarkable is awake. Therefore, these images do not change either (a) while sleeping or (b) necessarily after every sleep/wake cycle.
-
-If you change the contents of `/home/root/customization/images/suspended` the script will detect the change and reindex the images automatically.
-
-Create your own images! They need to be 1404 x 1872 pngs and I used 229 ppi resolution. They don't have to be grayscale to work. I found the reMarkable logos here: [https://brandfetch.com/remarkable.com](https://brandfetch.com/remarkable.com)
-
-> [!NOTE]
-> This repo comes with some default images. I did my best to research them to ensure they were not copyrighted. If you find they are or are the creator, please send a PR to this repo and I will either credit you or delete the image as you desire.
 
 ### Manual installation (on-sleep trigger — preferred)
 
@@ -62,7 +49,7 @@ systemctl enable /usr/lib/systemd/system/monitor-sleep-wake.service
 systemctl start monitor-sleep-wake.service
 ```
 
-- Disable the 5-minute timer (no longer needed):
+- Disable the 5-minute timer (if it is still present):
 
 ```bash
 systemctl disable random-screens.timer
