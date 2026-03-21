@@ -108,7 +108,7 @@ systemctl enable /usr/lib/systemd/system/monitor-sleep-wake.service
 systemctl start monitor-sleep-wake.service
 ```
 
-- Run the script to initialze it:
+- Run the script to initialize it:
 
 ```bash
 /usr/share/remarkable/scripts/set-random-sleep.sh
