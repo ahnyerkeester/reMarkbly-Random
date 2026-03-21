@@ -1,20 +1,44 @@
 #!/bin/bash
 
-# putitback.sh - Restoration script to manage monitor sleep/wake settings
+# putitback.sh - Restoration script after reMarkable system updates
+# This script restores the random sleep screen setup after a device update
+# wipes /usr/share and /etc/systemd/system directories
 
-# Step 1: Define the source and destination for the new monitor-sleep-wake files
-SOURCE_FILES="/path/to/new/monitor-sleep-wake/files/*"
-DESTINATION_DIR="/path/to/destination/directory/"
+# Create the target directory if it doesn't exist
+mkdir -p /usr/share/remarkable/scripts
 
-# Step 2: Copy the new monitor-sleep-wake files to the destination
-echo "Copying new monitor-sleep-wake files..."
-cp $SOURCE_FILES $DESTINATION_DIR
+# Copy the main script and set permissions
+# set-random-sleep.sh: Selects a random image and sets it as the sleep screen
+cp /home/root/set-random-sleep.sh /usr/share/remarkable/scripts/
+chmod 755 /usr/share/remarkable/scripts/set-random-sleep.sh
 
-# Step 3: Disable the old timer settings
-# Assuming the old timer settings are stored in a specific file
-OLD_TIMER_FILE="/path/to/old/timer/file"
-echo "Disabling old timer settings..."
-sed -i 's/enabled=false/enabled=true/' $OLD_TIMER_FILE
+# Copy the monitor-sleep-wake script and set permissions
+# monitor-sleep-wake.sh: Monitors /sys/power/wakeup_count and triggers
+# set-random-sleep.sh whenever the device wakes from sleep
+cp /home/root/monitor-sleep-wake.sh /usr/share/remarkable/scripts/
+chmod 755 /usr/share/remarkable/scripts/monitor-sleep-wake.sh
 
-# Step 4: Provide a status update
-echo "Restoration complete: New files copied and old timer disabled."
+# Copy the systemd service file
+# monitor-sleep-wake.service: Runs monitor-sleep-wake.sh at boot and
+# automatically restarts if it crashes
+cp /home/root/monitor-sleep-wake.service /etc/systemd/system/
+chmod 644 /etc/systemd/system/monitor-sleep-wake.service
+
+# Remove the old timer-based approach (if it exists from previous setup)
+# This disables the 5-minute timer that was less efficient
+systemctl disable --now random-screens.timer 2>/dev/null || true
+rm -f /etc/systemd/system/random-screens.timer
+rm -f /etc/systemd/system/random-screens.service
+
+# Reload systemd daemon to recognize new service
+systemctl daemon-reload
+
+# Enable and start the new monitor service
+# This will auto-start on reboot and keep running in background
+systemctl enable --now monitor-sleep-wake.service
+
+# Run the script once immediately to set an initial random sleep screen
+/usr/share/remarkable/scripts/set-random-sleep.sh
+
+echo "Restoration complete! Random sleep screen monitor is now active."
+echo "The device will change the sleep screen image every time it wakes from sleep.",
