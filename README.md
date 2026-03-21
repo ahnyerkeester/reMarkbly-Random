@@ -11,6 +11,13 @@ Scripts tested and working on versions `3.17.x` up to `3.26.x`. May work on prev
 > [!NOTE]
 > Updates tend to remove the timer and reset the sleep screen to default. Good news is that it leaves your images alone. To fix this, just run `./putitback.sh`.
 
+### Create your own images
+
+Create your own images! They need to be 1404 x 1872 pngs and I used 229 ppi resolution. They don't have to be grayscale to work. I found the reMarkable logos here: [https://brandfetch.com/remarkable.com](https://brandfetch.com/remarkable.com)
+
+> [!NOTE]
+> This repo comes with some default images. I did my best to research them to ensure they were not copyrighted. If you find they are or are the creator, please send a PR to this repo and I will either credit you or delete the image as you desire.
+
 ## Automatically change your suspend screen on every sleep/wake cycle
 
 After installing this script, the images in `/home/root/customization/images/suspended` are indexed, put in a random order, and every time the reMarkable wakes from sleep the next image in order is made the current suspend screen. The names of the files are not relevant.
@@ -36,7 +43,7 @@ git clone git@github.com:ahnyerkeester/reMarkably-Random.git reMarkable-customiz
 - Get the IP address and password for your reMarkable: Menu bars in the top left corner -> **Settings** -> **About** -> **Copyrights and licenses**. These are displayed at the bottom of that box.
 
 > [!IMPORTANT]
->The IP address will change periodically when connecting over WiFi, don't assume it will always be the same.
+> The IP address will change periodically when connecting over WiFi, don't assume it will always be the same.
 
 - Connect to your reMarkable via USB or wake it and ensure it connects to WiFi. Copy this repo into a temp folder (change the XXXs below to the reMarabkle's IP address):
 
@@ -62,6 +69,7 @@ reMarkable: ~/
 mkdir -p /usr/share/remarkable/scripts
 mkdir -p /home/root/customization/images/suspended
 ```
+
 - Copy the monitoring script and make it executable:
 
 ```bash
