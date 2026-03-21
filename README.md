@@ -1,49 +1,27 @@
-# reMarkbly-Random
+# reMarkbly Random
 
-## Timer Options
+This is the reMarkbly Random project.
 
-### Preferred Option: On-Sleep Trigger
+## Images
 
-The preferred method for managing your random screens is using the on-sleep trigger. This method ensures that your timer settings are handled effectively while your system is idle.
+Images should be properly formatted and uploaded according to the guidelines provided.
 
-#### random-screens.service
-```ini
-[Unit]
-Description=Random Screensaver Timer
+## Installation
 
-[Service]
-Type=simple
-ExecStart=/usr/bin/some-random-screensaver-command
-```  
+Follow the installation instructions detailed in this section to get started.
 
-#### random-screens.timer
-```ini
-[Unit]
-Description=Runs Random Screensaver every time the computer goes idle
+1. Clone the repository using `git clone <repository_url>`.
+2. Navigate into the project directory.
+3. Install dependencies using `npm install`.
 
-[Timer]
-OnActiveSec=5min
-Persistent=true
+## Troubleshooting
 
-[Install]
-WantedBy=timers.target
-```  
+If you encounter any issues, please refer to the troubleshooting section for common problems and their solutions.
 
-### Deprecated Option: 5-Minute Timer
+### Common Issues
+- Problem 1: Description of the problem and how to fix it.
+- Problem 2: Description of the problem and how to fix it.
 
-**DEPRECATION WARNING:** The 5-minute timer option is now considered a legacy setting. It is still available for use but is not recommended as the preferred method. Please consider using the on-sleep trigger instead.
+## On-sleep Trigger Method
 
-#### 5-Minute Timer Configuration
-```ini
-[Unit]
-Description=5-Minute Random Screensaver Timer
-
-[Timer]
-OnActiveSec=5min
-Unit=random-screens.service
-
-[Install]
-WantedBy=timers.target
-```  
-
-Please copy and paste the relevant configurations into your system as needed.
+The on-sleep trigger method is designed to activate upon specific conditions that indicate the system is entering a sleep state. This method allows for battery optimization and properly saves the state of the application before sleep.
