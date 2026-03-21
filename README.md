@@ -27,39 +27,6 @@ If you change the contents of `/home/root/customization/images/suspended` the sc
 
 ### Manual installation
 
-Follow all steps in the [Manual installation](#manual-installation) section below first, then continue here to add the sleep/wake monitoring service.
-
-- Copy the monitoring script and make it executable:
-
-```bash
-cp /home/root/temp-reMarkable-customizations/scripts/random-screens/monitor-sleep-wake.sh /usr/share/remarkable/scripts/
-chmod +x /usr/share/remarkable/scripts/monitor-sleep-wake.sh
-```
-
-- Copy the service into the system services folder:
-
-```bash
-cp /home/root/temp-reMarkable-customizations/scripts/random-screens/monitor-sleep-wake.service /usr/lib/systemd/system/monitor-sleep-wake.service
-```
-
-- Enable and start the monitoring service:
-
-```bash
-systemctl enable /usr/lib/systemd/system/monitor-sleep-wake.service
-systemctl start monitor-sleep-wake.service
-```
-
-- Disable the 5-minute timer (if it is still present):
-
-```bash
-systemctl disable random-screens.timer
-systemctl stop random-screens.timer
-```
-
-- Put your reMarkable to sleep and wake it — the sleep screen should change each time.
-
-### Manual installation
-
 - Clone this repo:
 
 ```bash
@@ -68,8 +35,8 @@ git clone git@github.com:ahnyerkeester/reMarkably-Random.git reMarkable-customiz
 
 - Get the IP address and password for your reMarkable: Menu bars in the top left corner -> **Settings** -> **About** -> **Copyrights and licenses**. These are displayed at the bottom of that box.
 
-> [!IMPORTANT]  
->Be aware that the IP address may change periodically when connecting over WiFi, don't assume it will always be the same.
+> [!IMPORTANT]
+>The IP address will change periodically when connecting over WiFi, don't assume it will always be the same.
 
 - Connect to your reMarkable via USB or wake it and ensure it connects to WiFi. Copy this repo into a temp folder (change the XXXs below to the reMarabkle's IP address):
 
@@ -95,12 +62,11 @@ reMarkable: ~/
 mkdir -p /usr/share/remarkable/scripts
 mkdir -p /home/root/customization/images/suspended
 ```
-
-- Copy the script into the correct folder and make it executable:
+- Copy the monitoring script and make it executable:
 
 ```bash
-cp /home/root/temp-reMarkable-customizations/scripts/random-screens/set-random-sleep.sh /usr/share/remarkable/scripts/
-chmod +x /usr/share/remarkable/scripts/set-random-sleep.sh
+cp /home/root/temp-reMarkable-customizations/scripts/random-screens/monitor-sleep-wake.sh /usr/share/remarkable/scripts/
+chmod +x /usr/share/remarkable/scripts/monitor-sleep-wake.sh
 ```
 
 - Copy some images into the folder:
@@ -115,11 +81,10 @@ If you want to use your own images now or in the future, you'll need to be in th
 scp -r *.png root@XXX.XXX.XXX.XXX:/home/root/customization/images/suspended
 ```
 
-- Copy the service and timer into the correct folder:
+- Copy the service into the system services folder:
 
 ```bash
-cp /home/root/temp-reMarkable-customizations/scripts/random-screens/random-screens.service /usr/lib/systemd/user/random-screens.service
-cp /home/root/temp-reMarkable-customizations/scripts/random-screens/random-screens.timer /usr/lib/systemd/user/random-screens.timer
+cp /home/root/temp-reMarkable-customizations/scripts/random-screens/monitor-sleep-wake.service /usr/lib/systemd/system/monitor-sleep-wake.service
 ```
 
 - Save the original image, _just in case_:
@@ -128,11 +93,11 @@ cp /home/root/temp-reMarkable-customizations/scripts/random-screens/random-scree
 yes n | cp -i /usr/share/remarkable/suspended.png /usr/share/remarkable/suspended.original.png
 ```
 
-- Enable service and timer:
+- Enable and start the monitoring service:
 
 ```bash
-systemctl enable /usr/lib/systemd/user/random-screens.timer
-systemctl enable /usr/lib/systemd/user/random-screens.service
+systemctl enable /usr/lib/systemd/system/monitor-sleep-wake.service
+systemctl start monitor-sleep-wake.service
 ```
 
 - Run the script to initialze it:
