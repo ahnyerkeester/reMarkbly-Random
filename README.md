@@ -9,13 +9,27 @@ Customizations for reMarkable and reMarkable 2 Paper Tablet.
 Scripts tested and working on version `3.17.x` and `3.18.x`. May work on previous versions but I don't have access so couldn't test.
 
 > [!NOTE]
-> The `3.18` update removes the script and timer and resets the sleep screen to default. The fix is straightfoward. Put `random-screens.service`, `random-screens.timer`, and `set-random-sleep.sh` back where they belong and enable the service and timer as listed below.
+> The `3.18` update removes the script and timer and resets the sleep screen to default. The fix is straightforward. Put `random-screens.service`, `random-screens.timer`, `set-random-sleep.sh`, `monitor-sleep-wake.service`, and `monitor-sleep-wake.sh` back where they belong and enable them as listed below.
+
+## Automatically change your suspend screen on every sleep/wake cycle (preferred)
+
+After installing this script, the images in `/home/root/customization/images/suspended` are indexed, put in a random order, and every time the reMarkable wakes from sleep the next image in order is made the current suspend screen. The names of the files are not relevant.
+
+This approach monitors `/sys/power/wakeup_count` (the standard Linux power management interface) and triggers the image change immediately after each wake event, achieving the original goal of updating the screen on every sleep/wake cycle.
+
+If you change the contents of `/home/root/customization/images/suspended` the script will detect the change and reindex the images automatically.
+
+> [!TIP]
+> If the sleep screen stops changing after modifying the script, restart the monitoring service:
+> ```bash
+> systemctl restart monitor-sleep-wake.service
+> ```
 
 ## Automatically change your suspend screen every 5 minutes
 
 After installing this script, the images in `/home/root/customization/images/suspended` are indexed, put in a random order, and every 5 minutes the next image in order is made the current suspend screen. The names of the files are not relevant.
 
-The suspend image is loaded only when the reMarkable goes to sleep and the timer seems to only run when the reMarkable is awake. Therefore, these images do not change either (a) while sleeping or (b) necessarily after every sleep/wake cycle. I tried to find a system "on sleep" or "on wake" hook to run the script on but wasn't able to so we're sticking with the "every five minutes" concept. Still working on triggering it every sleep/wake cycle.
+The suspend image is loaded only when the reMarkable goes to sleep and the timer seems to only run when the reMarkable is awake. Therefore, these images do not change either (a) while sleeping or (b) necessarily after every sleep/wake cycle.
 
 If you change the contents of `/home/root/customization/images/suspended` the script will detect the change and reindex the images automatically.
 
@@ -23,6 +37,39 @@ Create your own images! They need to be 1404 x 1872 pngs and I used 229 ppi reso
 
 > [!NOTE]
 > This repo comes with some default images. I did my best to research them to ensure they were not copyrighted. If you find they are or are the creator, please send a PR to this repo and I will either credit you or delete the image as you desire.
+
+### Manual installation (on-sleep trigger — preferred)
+
+Follow all steps in the [Manual installation](#manual-installation) section below first, then continue here to add the sleep/wake monitoring service.
+
+- Copy the monitoring script and make it executable:
+
+```bash
+cp /home/root/temp-reMarkable-customizations/scripts/random-screens/monitor-sleep-wake.sh /usr/share/remarkable/scripts/
+chmod +x /usr/share/remarkable/scripts/monitor-sleep-wake.sh
+```
+
+- Copy the service into the system services folder:
+
+```bash
+cp /home/root/temp-reMarkable-customizations/scripts/random-screens/monitor-sleep-wake.service /usr/lib/systemd/system/monitor-sleep-wake.service
+```
+
+- Enable and start the monitoring service:
+
+```bash
+systemctl enable /usr/lib/systemd/system/monitor-sleep-wake.service
+systemctl start monitor-sleep-wake.service
+```
+
+- Disable the 5-minute timer (no longer needed):
+
+```bash
+systemctl disable random-screens.timer
+systemctl stop random-screens.timer
+```
+
+- Put your reMarkable to sleep and wake it — the sleep screen should change each time.
 
 ### Manual installation
 
@@ -128,7 +175,23 @@ You can change the frequency of the refresh by modifying the value `OnUnitActive
 
 ### Troubleshooting
 
-To do some troubleshooting, you can use the following command to check the active timers. You should see `random-screens.timer` listed there, without error.
+You can check the status of the `monitor-sleep-wake` service to verify it is running and free of errors:
+
+```bash
+❯ systemctl status monitor-sleep-wake.service
+● monitor-sleep-wake.service - Monitor sleep/wake events and update reMarkable sleep screen
+     Loaded: loaded (/usr/lib/systemd/system/monitor-sleep-wake.service; enabled; vendor preset: disabled)
+     Active: active (running) since Tue 2023-06-20 19:30:00 UTC; 15min ago
+   Main PID: 312 (monitor-sleep-wa)
+```
+
+If the screen is not changing after wake events, restart the service:
+
+```bash
+systemctl restart monitor-sleep-wake.service
+```
+
+To do some troubleshooting on the 5-minute timer, you can use the following command to check the active timers. You should see `random-screens.timer` listed there, without error.
 
 ```bash
 ❯ systemctl list-timers --all
