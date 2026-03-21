@@ -11,7 +11,7 @@ Scripts tested and working on versions `3.17.x` up to `3.26.x`. May work on prev
 > [!NOTE]
 > Updates tend to remove the timer and reset the sleep screen to default. Good news is that it leaves your images alone. To fix this, just run `./putitback.sh`.
 
-## Automatically change your suspend screen on every sleep/wake cycle (preferred)
+## Automatically change your suspend screen on every sleep/wake cycle
 
 After installing this script, the images in `/home/root/customization/images/suspended` are indexed, put in a random order, and every time the reMarkable wakes from sleep the next image in order is made the current suspend screen. The names of the files are not relevant.
 
@@ -25,7 +25,7 @@ If you change the contents of `/home/root/customization/images/suspended` the sc
 > systemctl restart monitor-sleep-wake.service
 > ```
 
-### Manual installation (on-sleep trigger — preferred)
+### Manual installation
 
 Follow all steps in the [Manual installation](#manual-installation) section below first, then continue here to add the sleep/wake monitoring service.
 
@@ -135,7 +135,7 @@ systemctl enable /usr/lib/systemd/user/random-screens.timer
 systemctl enable /usr/lib/systemd/user/random-screens.service
 ```
 
-- Run the script to initilze it:
+- Run the script to initialze it:
 
 ```bash
 /usr/share/remarkable/scripts/set-random-sleep.sh
@@ -156,10 +156,6 @@ rm -rf /home/root/temp-reMarkable-customizations
 
 WIP :)
 
-### Change the frequency of the updates
-
-You can change the frequency of the refresh by modifying the value `OnUnitActiveSec` in the file `/usr/lib/systemd/user/random-screens.timer` and then restarting your reMarkable.
-
 ### Troubleshooting
 
 You can check the status of the `monitor-sleep-wake` service to verify it is running and free of errors:
@@ -176,30 +172,4 @@ If the screen is not changing after wake events, restart the service:
 
 ```bash
 systemctl restart monitor-sleep-wake.service
-```
-
-To do some troubleshooting on the 5-minute timer, you can use the following command to check the active timers. You should see `random-screens.timer` listed there, without error.
-
-```bash
-❯ systemctl list-timers --all
-NEXT                         LEFT          LAST                         PASSED      UNIT                         ACTIVATES
-Tue 2023-06-20 19:44:06 UTC  2min 53s left Tue 2023-06-20 19:39:06 UTC  2min 6s ago random-screens.timer         random-screens.service
-Wed 2023-06-21 19:16:32 UTC  23h left      Tue 2023-06-20 19:12:49 UTC  28min ago   systemd-tmpfiles-clean.timer systemd-tmpfiles-clean.service
-
-2 timers listed.
-```
-
-You can also check the status of the `random-screens` service. You should see it was activated within the last 5 minutes (or your custom set frequency) and without errors.
-
-```bash
-❯ systemctl status random-screens.service
-● random-screens.service - Set random images for splash screens
-     Loaded: loaded (/usr/lib/systemd/user/random-screens.service; enabled; vendor preset: disabled)
-     Active: inactive (dead) since Tue 2023-06-20 19:43:08 UTC; 38s ago
-TriggeredBy: ● random-screens.timer
-    Process: 175 ExecStart=/usr/share/remarkable/scripts/set-random-screens.sh (code=exited, status=0/SUCCESS)
-   Main PID: 175 (code=exited, status=0/SUCCESS)
-
-Jun 20 19:43:08 reMarkable systemd[1]: Started Set random images for splash screens.
-Jun 20 19:43:08 reMarkable systemd[1]: random-screens.service: Succeeded.
 ```
