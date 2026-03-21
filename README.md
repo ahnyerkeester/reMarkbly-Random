@@ -6,10 +6,10 @@ Customizations for reMarkable and reMarkable 2 Paper Tablet.
 > [!WARNING]
 > This project is **NOT** affiliated with nor endorsed by reMarkable AS. If you modify your device, official support might refuse to help you if something goes wrong. Use at your own risk.
 
-Scripts tested and working on version `3.17.x` and `3.18.x`. May work on previous versions but I don't have access so couldn't test.
+Scripts tested and working on version `3.17.x` up to `3.26.x`. May work on previous versions but I don't have access so couldn't test.
 
 > [!NOTE]
-> The `3.18` update removes the script and timer and resets the sleep screen to default. The fix is straightforward. Put `random-screens.service`, `random-screens.timer`, `set-random-sleep.sh`, `monitor-sleep-wake.service`, and `monitor-sleep-wake.sh` back where they belong and enable them as listed below.
+> Updates tend to remove the script and timer and resets the sleep screen to default. I've included the `putitback.sh` script to deal with that. If you update your reMarkable and the screen resets to default, log in and run `./putitback.sh`.
 
 ## Automatically change your suspend screen on every sleep/wake cycle (preferred)
 
