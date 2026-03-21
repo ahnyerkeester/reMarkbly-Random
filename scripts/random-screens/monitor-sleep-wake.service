@@ -1,0 +1,12 @@
+[Unit]
+Description=Monitor sleep/wake events and update reMarkable sleep screen
+After=home.mount
+
+[Service]
+Type=simple
+ExecStart=/usr/share/remarkable/scripts/monitor-sleep-wake.sh
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
