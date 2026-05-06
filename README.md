@@ -138,7 +138,7 @@ You can check the status of the `monitor-sleep-wake` service to verify it is run
 ```bash
 ❯ systemctl status monitor-sleep-wake.service
 ● monitor-sleep-wake.service - Monitor sleep/wake events and update reMarkable sleep screen
-     Loaded: loaded (/usr/lib/systemd/system/monitor-sleep-wake.service; enabled; vendor preset: disabled)
+     Loaded: loaded (/etc/systemd/system/monitor-sleep-wake.service; enabled; vendor preset: disabled)
      Active: active (running) since Tue 2023-06-20 19:30:00 UTC; 15min ago
    Main PID: 312 (monitor-sleep-wa)
 ```
