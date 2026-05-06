@@ -70,9 +70,11 @@ mkdir -p /usr/share/remarkable/scripts
 mkdir -p /home/root/customization/images/suspended
 ```
 
-- Copy the monitoring script and make it executable:
+- Copy the scripts and make them executable:
 
 ```bash
+cp /home/root/temp-reMarkable-customizations/scripts/random-screens/set-random-sleep.sh /usr/share/remarkable/scripts/
+chmod +x /usr/share/remarkable/scripts/set-random-sleep.sh
 cp /home/root/temp-reMarkable-customizations/scripts/random-screens/monitor-sleep-wake.sh /usr/share/remarkable/scripts/
 chmod +x /usr/share/remarkable/scripts/monitor-sleep-wake.sh
 ```
@@ -92,7 +94,7 @@ scp -r *.png root@XXX.XXX.XXX.XXX:/home/root/customization/images/suspended
 - Copy the service into the system services folder:
 
 ```bash
-cp /home/root/temp-reMarkable-customizations/scripts/random-screens/monitor-sleep-wake.service /usr/lib/systemd/system/monitor-sleep-wake.service
+cp /home/root/temp-reMarkable-customizations/scripts/random-screens/monitor-sleep-wake.service /etc/systemd/system/monitor-sleep-wake.service
 ```
 
 - Save the original image, _just in case_:
@@ -104,7 +106,7 @@ yes n | cp -i /usr/share/remarkable/suspended.png /usr/share/remarkable/suspende
 - Enable and start the monitoring service:
 
 ```bash
-systemctl enable /usr/lib/systemd/system/monitor-sleep-wake.service
+systemctl enable /etc/systemd/system/monitor-sleep-wake.service
 systemctl start monitor-sleep-wake.service
 ```
 
